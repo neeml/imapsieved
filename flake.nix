@@ -6,6 +6,9 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    systems.url = "github:nix-systems/default";
+    devenv.url = "github:cachix/devenv";
+    devenv.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, ... } @ inputs:
     inputs.flake-utils.lib.eachDefaultSystem
@@ -14,15 +17,18 @@
           pkgs = inputs.nixpkgs.outputs.legacyPackages.${system};
         in
         {
-          packages.imapsieved = pkgs.callPackage ./imapsieved.nix { };
-          packages.default = self.outputs.packages.${system}.imapsieved;
+          packages = {
+            imapsieved = pkgs.callPackage ./imapsieved.nix { };
+            default = self.outputs.packages.${system}.imapsieved;
+            devenv-up = self.devShells.${system}.default.config.procfileScript;
+          };
 
-          devShells.default = self.packages.${system}.default.overrideAttrs (super: {
-            nativeBuildInputs = with pkgs; [
-              super.nativeBuildInputs
+          devShells.default = inputs.devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ./devenv.nix
             ];
-            RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
-          });
+          };
         })
     // {
       overlays.default = final: prev: {
