@@ -10,10 +10,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoLock = {
     lockFile = "${src}/Cargo.lock";
-    outputHashes = {
-      "imap-3.0.0-alpha.14" = "sha256-S5exYKExT6eg23Sj5c9KtuKQcZCYODOHvsv8CgHx5Zk=";
-    };
-    allowBuiltinFetchGit = false;
+    allowBuiltinFetchGit = true;
   };
 
   nativeBuildInputs = with pkgs; [ pkg-config protobuf ];
