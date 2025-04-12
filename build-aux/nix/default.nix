@@ -3,15 +3,15 @@
 , rustPlatform
 ,
 }:
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage rec {
   name = "imapsieved";
 
-  src = lib.cleanSource ./.;
+  src = lib.cleanSource ../../.;
 
   cargoLock = {
-    lockFile = ./Cargo.lock;
+    lockFile = "${src}/Cargo.lock";
     outputHashes = {
-      "imap-3.0.0-alpha.14" = "";
+      "imap-3.0.0-alpha.14" = "sha256-S5exYKExT6eg23Sj5c9KtuKQcZCYODOHvsv8CgHx5Zk=";
     };
     allowBuiltinFetchGit = false;
   };
