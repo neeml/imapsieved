@@ -1,24 +1,25 @@
-{ lib
-, pkgs ? import <nixpkgs>
-, rustPlatform
-,
+{
+  lib,
+  self,
+  pkgs,
+  rustPlatform,
 }:
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage (finalAttrs: {
   name = "imapsieved";
 
-  src = lib.cleanSource ../../.;
+  src = lib.cleanSource self;
 
   cargoLock = {
-    lockFile = "${src}/Cargo.lock";
+    lockFile = "${finalAttrs.src}/Cargo.lock";
     allowBuiltinFetchGit = true;
   };
 
-  nativeBuildInputs = with pkgs; [ pkg-config protobuf ];
-  buildInputs = with pkgs; [ systemd.dev ];
+  nativeBuildInputs = with pkgs; [pkg-config protobuf];
+  buildInputs = with pkgs; [systemd.dev openssl.dev];
 
   meta = with lib; {
     description = "";
     homepage = "https://github.com/neeml/imapsieved";
     license = licenses.asl20;
   };
-}
+})
