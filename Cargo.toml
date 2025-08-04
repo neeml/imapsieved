@@ -11,6 +11,6 @@ email = "0.0.21"
 imap = "2.4.1"
 sieve-rs = "0.7.0"
 thiserror = "2.0.12"
-tokio = { version = "1.47.0", features = ["full"] }
+tokio = { version = "1.47.1", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
