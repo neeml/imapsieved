@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 color-eyre = "0.6.5"
-config = { version = "0.15.17", features = ["toml"] }
+config = { version = "0.15.18", features = ["toml"] }
 daemonize = "0.5.0"
 email = "0.0.21"
 imap = "2.4.1"
